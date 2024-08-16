@@ -1,0 +1,31 @@
+name: Build and push Docker image to Dockerhub
+
+on:
+  push:
+    branches: [ "master" ]
+    
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check out the repo
+      uses: actions/checkout@v4
+
+    - name: Login to Dockerhub
+      uses: docker/login-action@v3
+      with:
+       username: ${{ secrets.DOCKERHUB_USERNAME }}
+       password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+    - name: Build and push to Dockerhub
+      id: docker_build
+      uses: docker/build-push-action@v5
+      with:
+       push: true
+       tags: lucad87/frigate-telegram:latest
+       
+    - name: Image digest
+      run: echo ${{ steps.docker_build.outputs.digest }}
