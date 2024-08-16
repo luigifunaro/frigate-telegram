@@ -5,7 +5,7 @@ This project is a Telegram bot integration for Frigate, an open-source NVR (Netw
 The application is written in Node.js and polls the Frigate API to fetch new events. When a new event is detected, it is forwarded to Telegram, including several event details, the event clip url and a thumbnail.
 This project aims to retrieve events from Frigate using its API without relying on external tools like Home Assistant. MQTT is not supported.
 
-The application polls Frigate every 60 seconds to fetch new alerts. The GET request to the Frigate API retrieves events from the last 60 seconds, filtered by the parameters specified in the `docker-compose` file (label, camera, and zones).
+The application polls Frigate every 60 seconds -by default- to fetch new alerts. The GET request to the Frigate API retrieves events from the last 60 seconds, filtered by the parameters specified in the `docker-compose` file (label, camera, and zones). You can customize it with `POLLING_INTERVAL`: it will set the same value for both application `polling interval` and frigate `after`.
 
 ## Docker hub
 https://hub.docker.com/r/lucad87/frigate-telegram
