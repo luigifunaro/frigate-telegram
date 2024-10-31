@@ -7,6 +7,7 @@ const pollEventsWithErrorHandling = () => {
         processEvents();
     } catch (error) {
         logger.error('Error occurred during pollEvents execution:', error);
+        process.exit(1); // Exit the application with a non-zero status code
     }
 };
 
@@ -19,6 +20,10 @@ const startPolling = () => {
                 pollEventsWithErrorHandling();
                 setInterval(pollEventsWithErrorHandling, polling.interval * 1000);
             }
+        })
+        .catch((error) => {
+            logger.error('Error occurred during processFrigateStatus execution:', error);
+            process.exit(1); // Exit the application with a non-zero status code
         });
 };
 
