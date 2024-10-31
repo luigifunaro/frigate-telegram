@@ -15,6 +15,11 @@ const bot = new TelegramBot(token, { polling: true });
 */
 process.env['NTBA_FIX_350'] = 1; // Fix for the warning above
 
+bot.on('polling_error', (error) => {
+    logger.error('Polling error:', error);
+    process.exit(1); // Exit the application with a non-zero status code
+});
+
 const sendPhoto = (eventMessage, photoBuffer, eventId) => {
     const options = {
         caption: eventMessage,
