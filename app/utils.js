@@ -9,11 +9,10 @@ const getEpochTimestampFromSecondsAgo = (seconds) => {
     return Math.floor((actual_dateTime - (seconds * 1000)) / 1000);
 };
 
-const formatEventMessage = (event, frigateMediaUrl) => {
+const formatEventMessage = (event) => {
     return util.format('%s\n%s\n%s\n%s',
-        '⚠️⚠️ <b>EVENT DETECTED</b> ⚠️⚠️', 
-        `<pre>${event.id}</pre>`, 
-        `🎥 <a href="${frigateMediaUrl}/api/events/${event.id}/clip.mp4"><b>VIDEO LINK</b></a> 🎥`, 
+        '⚠️⚠️ <b>NUOVO EVENTO</b> ⚠️⚠️',
+        `<pre><i>Telecamera: ${event.camera}</i>`, 
         `<pre><i>${epochToDateTime(event.start_time)}</i>`, 
         `<i>${epochToDateTime(event.end_time)}</i></pre>`,
     );

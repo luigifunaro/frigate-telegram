@@ -3,21 +3,16 @@ const logger = require('./logger.js');
 const { telegram } = require('../config/settings.js').config;
 
 const token = telegram.token;
-const chatId = telegram.chatId;
+const chatIds = telegram.chatIds;
 
 const bot = new TelegramBot(token, { polling: true });
 
-/*
-    * (node:1) [node-telegram-bot-api] DeprecationWarning: 
-    * In the future, content-type of files you send will default to "application/octet-stream". 
-    * See https://github.com/yagop/node-telegram-bot-api/blob/master/doc/usage.md#sending-files 
-    * for more information on how sending files has been improved and on how to disable this deprecation message altogether.
-*/
-process.env['NTBA_FIX_350'] = 1; // Fix for the warning above
+// Fix for the deprecation warning
+process.env['NTBA_FIX_350'] = 1;
 
 bot.on('polling_error', (error) => {
     logger.error('Polling error:', error);
-    process.exit(1); // Exit the application with a non-zero status code
+    process.exit(1);
 });
 
 const sendPhoto = (eventMessage, photoBuffer, eventId) => {
@@ -31,11 +26,35 @@ const sendPhoto = (eventMessage, photoBuffer, eventId) => {
         contentType: 'image/jpeg'
     };
 
-    try {
-        bot.sendPhoto(chatId, photoBuffer, options, fileOptions);
-    } catch (error) {
-        logger.error('Error sending message and thumbnail to Telegram:', error);
-    }
+    chatIds.forEach((chatId) => {
+        try {
+            bot.sendPhoto(chatId, photoBuffer, options, fileOptions);
+            logger.info(`Photo for event ${eventId} sent to chat ${chatId}`);
+        } catch (error) {
+            logger.error(`Error sending photo to chat ${chatId}:`, error);
+        }
+    });
 };
 
-module.exports = { sendPhoto };
+const sendVideo = (eventMessage, videoBuffer, eventId) => {
+    const options = {
+        caption: eventMessage,
+        parse_mode: 'HTML'
+    };
+
+    const fileOptions = {
+        filename: `${eventId}.mp4`,
+        contentType: 'video/mp4'
+    };
+
+    chatIds.forEach((chatId) => {
+        try {
+            bot.sendVideo(chatId, videoBuffer, options, fileOptions);
+            logger.info(`Video for event ${eventId} sent to chat ${chatId}`);
+        } catch (error) {
+            logger.error(`Error sending video to chat ${chatId}:`, error);
+        }
+    });
+};
+
+module.exports = { sendPhoto, sendVideo };

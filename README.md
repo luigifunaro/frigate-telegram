@@ -20,8 +20,8 @@ https://hub.docker.com/r/lucad87/frigate-telegram
 - `FRIGATE_URL`: The URL of your Frigate instance (e.g., `http://192.168.1.7:5000`).
 - `FRIGATE_MEDIA_URL`: (Optional) The public URL of your Frigate media files (e.g., `https://your-media-frigate-instance.com`).
 - `TELEGRAM_BOT_TOKEN`: The token for your Telegram bot.
-- `TELEGRAM_CHAT_ID`: The chat ID where notifications will be sent.
-- `CAMERA`: The name of the frigate camera to monitor.
+- `TELEGRAM_CHAT_ID`: The chat IDs where notifications will be sent.
+- `CAMERA`: The names of the frigate cameras to monitor.
 - `ZONES`: The frigate zones to monitor for object detection (e.g., `front,back,street`).
 - `LABEL`: The frigate object label to monitor (e.g., `person`).
 - `TIMEZONE`: Your time zone, `Europe/Rome` is the default
@@ -41,8 +41,8 @@ services:
       - FRIGATE_URL=<your-frigate-instance-url>
       - FRIGATE_MEDIA_URL=<your-public-media-frigate-instance-url> # (optional) It fallbacks on FRIGATE_URL if not specified
       - TELEGRAM_BOT_TOKEN=<your-telegram-token>
-      - TELEGRAM_CHAT_ID=<your-telegram-chat-id>
-      - CAMERA=<frigate-camera>
+      - TELEGRAM_CHAT_IDS=<your-telegram-chat-id>
+      - CAMERAS=<frigate-camera>
       - ZONES=<frigate-zones>
       - LABEL=<frigate-label>
       - TIMEZONE=<you_timezone> # (optional) Set to the timezone to use for the date and time in the messages, Europe/Rome is the default

@@ -1,12 +1,12 @@
 const config = {
     telegram: {
         token: process.env.TELEGRAM_BOT_TOKEN,
-        chatId: process.env.TELEGRAM_CHAT_ID
+        chatIds: process.env.TELEGRAM_CHAT_IDS.split(',')
     },
     frigate: {
         url: process.env.FRIGATE_URL,
         mediaUrl: process.env.FRIGATE_MEDIA_URL || process.env.FRIGATE_URL,
-        camera: process.env.CAMERA,
+        cameras: process.env.CAMERAS.split(','),
         zones: process.env.ZONES,
         label: process.env.LABEL
     },

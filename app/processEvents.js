@@ -1,6 +1,7 @@
 const { fetchEvents } = require('./fetchEvents.js');
 const { formatEventMessage } = require('./utils.js');
 const { fetchFrigateStatus } = require('./fetchStatus.js');
+const { downloadVideo } = require('./processVideo.js');
 const { frigate } = require('../config/settings.js').config;
 const telegram = require('./telegramBot.js');
 const logger = require('./logger.js');
@@ -9,10 +10,12 @@ const processEvent = async (event) => {
     try {
         logger.info(`Event ${event.id} received`);
 
-        const eventMessage = formatEventMessage(event, frigate.mediaUrl);
-        const thumbnailBuffer = Buffer.from(event.thumbnail, 'base64');
+        const videoUrl = `${frigate.mediaUrl}/api/events/${event.id}/clip.mp4`;
+        const videoBuffer = await downloadVideo(videoUrl);
 
-        telegram.sendPhoto(eventMessage, thumbnailBuffer, event.id);
+        const eventMessage = formatEventMessage(event);
+
+        telegram.sendVideo(eventMessage, videoBuffer, event.id);
 
         logger.info(`Event ${event.id} sent to Telegram`);
     } catch (error) {
