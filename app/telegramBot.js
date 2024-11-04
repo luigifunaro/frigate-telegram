@@ -5,7 +5,7 @@ const { telegram } = require('../config/settings.js').config;
 const token = telegram.token;
 const chatIds = telegram.chatIds;
 
-const bot = new TelegramBot(token, { polling: true });
+const bot = new TelegramBot(token);
 
 // Fix for the deprecation warning
 process.env['NTBA_FIX_350'] = 1;
