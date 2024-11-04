@@ -12,7 +12,7 @@ const getEpochTimestampFromSecondsAgo = (seconds) => {
 const formatEventMessage = (event) => {
     return util.format('%s\n%s\n%s\n%s',
         '⚠️⚠️ <b>NUOVO EVENTO</b> ⚠️⚠️',
-        `<pre><i>Telecamera: ${event.camera}</i>`, 
+        `<i>Telecamera: ${event.camera}</i>`, 
         `<pre><i>${epochToDateTime(event.start_time)}</i>`, 
         `<i>${epochToDateTime(event.end_time)}</i></pre>`,
     );
