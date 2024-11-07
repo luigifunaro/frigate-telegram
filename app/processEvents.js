@@ -2,6 +2,7 @@ const { fetchEvents } = require('./fetchEvents.js');
 const { formatEventMessage } = require('./utils.js');
 const { fetchFrigateStatus } = require('./fetchStatus.js');
 const { downloadVideo } = require('./processVideo.js');
+const processedEvents = require('./processedEvents.js');
 const { frigate } = require('../config/settings.js').config;
 const telegram = require('./telegramBot.js');
 const logger = require('./logger.js');
@@ -18,6 +19,9 @@ const processEvent = async (event) => {
         telegram.sendVideo(eventMessage, videoBuffer, event.id);
 
         logger.info(`Event ${event.id} sent to Telegram`);
+
+        // Aggiungo l'ID dell'evento al set degli eventi processati
+        processedEvents.addProcessedEventId(event.id);
     } catch (error) {
         logger.error(`Error processing event ${event.id}`, error);
     }

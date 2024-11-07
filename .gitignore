@@ -50,3 +50,6 @@
 **/*.swp
 **/*.bak
 **/*.orig
+
+# Ignore db files
+**/db/

@@ -10,8 +10,8 @@ const getEpochTimestampFromSecondsAgo = (seconds) => {
 };
 
 const formatEventMessage = (event) => {
-    return util.format(
-        `<b>${event.label === 'person' ? 'PERSONA RILEVATA' : event.label === 'cat' ? 'GATTO RILEVATO' : 'NUOVO EVENTO: ' + event.label.toUpperCase()} </b>`,
+    return util.format('%s\n',
+        `<b>${event.label === 'person' ? 'PERSONA RILEVATA' : event.label === 'cat' ? 'GATTO RILEVATO' : 'NUOVO EVENTO: ' + event.label.toUpperCase()}</b>`,
         `<i>Telecamera: ${event.camera}</i>`,
     );
 };
